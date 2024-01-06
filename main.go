@@ -28,11 +28,11 @@ func main() {
 		ApplicationCommandHandlers: map[string]func(ctx context.Context, applicationCommand model.ApplicationCommand) (*model.InteractionResponse, error){
 			"create": func(ctx context.Context, applicationCommand model.ApplicationCommand) (*model.InteractionResponse, error) {
 				// Extract values from applicationCommand options
-				modsEnabled := "false"
+				modsEnabled := false
 				mapValue := "gridmap_v2"
 				maxPlayers := "5"
 				maxCars := "1"
-				private := "true"
+				private := true
 				if applicationCommand.Options != nil {
 					appCommands := applicationCommand.Options.([]interface{})
 					for _, cmdInterface := range appCommands {
@@ -44,15 +44,15 @@ func main() {
 						if cmd["value"] != nil {
 							switch cmd["name"].(string) {
 							case "modsenabled":
-								modsEnabled = fmt.Sprintf("%v", cmd["value"])
+								modsEnabled = cmd["value"].(bool)
 							case "map":
 								mapValue = cmd["value"].(string)
 							case "maxplayers":
-								maxPlayers = cmd["value"].(string)
+								maxPlayers = fmt.Sprintf("%v", cmd["value"].(float64))
 							case "maxcars":
-								maxCars = cmd["value"].(string)
+								maxCars = fmt.Sprintf("%v", cmd["value"].(float64))
 							case "private":
-								private = fmt.Sprintf("%v", cmd["value"])
+								private = cmd["value"].(bool)
 							default:
 								log.Ctx(ctx).Warn().Msgf("unrecognised command option recieved %s", cmd["name"].(string))
 							}
@@ -114,6 +114,7 @@ func main() {
 				}
 
 				// Make the POST request to GitHub
+				log.Ctx(ctx).Debug().Msgf("making POST request to GitHub: %s", payloadBytes)
 				err = ghPostRequest(payloadBytes)
 				if err != nil {
 					log.Ctx(ctx).Error().Msg("unable to make POST request to GitHub")
