@@ -184,4 +184,7 @@ resource "terracurl_request" "discord_application_interaction_url" {
     Accept        = "application/json"
   }
   destroy_response_codes = [200, 204]
+  lifecycle {
+    replace_triggered_by = [aws_api_gateway_deployment.bot_api_deployment]
+  }
 }

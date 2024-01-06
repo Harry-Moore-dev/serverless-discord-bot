@@ -43,16 +43,16 @@ func main() {
 						}
 						if cmd["value"] != nil {
 							switch cmd["name"].(string) {
-							case "modded":
-								modsEnabled = cmd["value"].(string)
+							case "modsenabled":
+								modsEnabled = fmt.Sprintf("%v", cmd["value"])
 							case "map":
 								mapValue = cmd["value"].(string)
-							case "max_players":
+							case "maxplayers":
 								maxPlayers = cmd["value"].(string)
-							case "max_cars":
+							case "maxcars":
 								maxCars = cmd["value"].(string)
 							case "private":
-								private = cmd["value"].(string)
+								private = fmt.Sprintf("%v", cmd["value"])
 							default:
 								log.Ctx(ctx).Warn().Msgf("unrecognised command option recieved %s", cmd["name"].(string))
 							}
