@@ -6,11 +6,11 @@ terraform {
       version = "~> 5.31.0"
     }
     discord-application = {
-      source = "MichaelFraser99/discord-application"
+      source  = "MichaelFraser99/discord-application"
       version = "0.2.2"
     }
     terracurl = {
-      source = "devops-rob/terracurl"
+      source  = "devops-rob/terracurl"
       version = "1.1.0"
     }
   }
@@ -33,4 +33,4 @@ provider "discord-application" {
   token = var.application_secret
 }
 
-provider "terracurl" {}  
+provider "terracurl" {}
