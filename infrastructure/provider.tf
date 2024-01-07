@@ -7,7 +7,7 @@ terraform {
     }
     discord-application = {
       source  = "MichaelFraser99/discord-application"
-      version = "0.2.2"
+      version = "0.2.3"
     }
     terracurl = {
       source  = "devops-rob/terracurl"
