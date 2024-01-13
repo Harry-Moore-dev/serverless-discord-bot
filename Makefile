@@ -12,7 +12,7 @@ build:
 
 # Terraform
 init:
-	cd infrastructure && terraform init
+	cd infrastructure && terraform init -upgrade
 
 plan:
 	cd infrastructure && terraform plan --var-file=vars.tfvars -out tfplan
