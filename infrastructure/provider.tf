@@ -7,11 +7,7 @@ terraform {
     }
     discord-application = {
       source  = "MichaelFraser99/discord-application"
-      version = "0.2.3"
-    }
-    terracurl = {
-      source  = "devops-rob/terracurl"
-      version = "1.1.0"
+      version = "0.3.0"
     }
   }
   backend "s3" {
@@ -32,5 +28,3 @@ provider "aws" {
 provider "discord-application" {
   token = var.application_secret
 }
-
-provider "terracurl" {}
