@@ -155,36 +155,7 @@ resource "discord-application_command" "destroy_server" {
   type           = 1
 }
 
-resource "terracurl_request" "discord_application_interaction_url" {
-  name         = "discord_application_interaction_url"
-  url          = "https://discord.com/api/v10/applications/${var.application_id}"
-  method       = "PATCH"
-  request_body = <<EOF
-{
-  "interactions_endpoint_url": "${aws_api_gateway_stage.bot_api_stage.invoke_url}/interaction"
-}
-  EOF
-  headers = {
-    Authorization = "Bot ${var.application_secret}"
-    Content-Type  = "application/json"
-    Accept        = "application/json"
-  }
-  response_codes = [200, 204]
-
-  destroy_url          = "https://discord.com/api/v10/applications/${var.application_id}"
-  destroy_method       = "PATCH"
-  destroy_request_body = <<EOF
-{
-  "interactions_endpoint_url": ""
-}
-  EOF
-  destroy_headers = {
-    Authorization = "Bot ${var.application_secret}"
-    Content-Type  = "application/json"
-    Accept        = "application/json"
-  }
-  destroy_response_codes = [200, 204]
-  lifecycle {
-    replace_triggered_by = [aws_api_gateway_deployment.bot_api_deployment]
-  }
+resource "discord-application_interactions_endpoint" "interactions_endpoint" {
+  application_id            = var.application_id
+  interactions_endpoint_url = "${aws_api_gateway_stage.bot_api_stage.invoke_url}/interaction"
 }
